@@ -8,11 +8,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id         String       @id @default(uuid())
+  email      String
+  password   String
+  websites   Website[]
+}
+
 model Website {
   id         String       @id @default(uuid())
   url        String
   timeAdded  DateTime
   ticks      WebsiteTick[]
+  user_id    String
+  user       User         @relation(fields: [user_id], references: [id])
 }
 
 model Region {
