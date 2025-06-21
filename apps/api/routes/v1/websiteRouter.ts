@@ -10,7 +10,8 @@ websiteRouter.post("/", async (req, res) => {
   const newWebsite = await client.website.create({
     data: {
       timeAdded: new Date(),
-      url: req.body.url
+      url: req.body.url,
+      user: req.cookies.user
     }
   });
 
