@@ -8,9 +8,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id         String       @id @default(uuid())
-  email      String
+  email      String       @unique
   password   String
   websites   Website[]
 }
@@ -21,7 +21,7 @@ model Website {
   timeAdded  DateTime
   ticks      WebsiteTick[]
   user_id    String
-  user       User         @relation(fields: [user_id], references: [id])
+  user       Users         @relation(fields: [user_id], references: [id])
 }
 
 model Region {
