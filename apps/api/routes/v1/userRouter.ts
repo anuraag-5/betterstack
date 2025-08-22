@@ -20,13 +20,6 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
       data: { email, password },
     });
 
-    res.cookie("user", user.id, {
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      secure: false, // ✅ set to false for local dev
-      sameSite: "lax",
-    });
-
     return res.status(201).json({ id: user.id });
   } catch (error: any) {
     console.error(error.message);
@@ -63,6 +56,13 @@ userRouter.post("/signin", async (req: Request, res: Response) => {
     let token = jwt.sign({
       sub: user.id
     }, process.env.JWT_SECRET!);
+
+    res.cookie("user", user.id, {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: false, // ✅ set to false for local dev
+      sameSite: "lax",
+    });
 
     return res.status(201).json({ jwt: token });
   } catch (error: any) {
